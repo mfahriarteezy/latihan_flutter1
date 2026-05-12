@@ -13,11 +13,7 @@ class JuggernautProfile extends StatelessWidget {
       home: Scaffold(
         backgroundColor: const Color(0xFF1A1A1A), // Hitam pekat khas dashboard Dota
         // 1. Header (AppBar)
-        appBar: AppBar(
-          title: const Text("HERO STATS", style: TextStyle(letterSpacing: 2)),
-          backgroundColor: const Color(0xFFB71C1C), // Merah berani
-          centerTitle: true,
-        ),
+        
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
