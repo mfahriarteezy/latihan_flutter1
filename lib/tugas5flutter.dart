@@ -346,7 +346,7 @@ class _FoodRescuePageState extends State<FoodRescuePage> {
                         child: Text(
                           "$jumlahMakanan",
                           style: const TextStyle(
-                            fontSize: 45,
+                            fontSize: 26,
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
                           ),

@@ -1,27 +1,23 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const FoodRescueApp());
+  runApp(const MyApp());
 }
 
-class FoodRescueApp extends StatelessWidget {
-  const FoodRescueApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Food Rescue Login',
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-        scaffoldBackgroundColor: const Color(
-          0xFFF9FAFB,
-        ), // Latar belakang Gray 50
-      ),
-      home: const LoginPage(),
+      title: 'Food Rescue',
+      home: LoginPage(),
     );
   }
 }
+
+// TAMPILAN LOGIN
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -37,6 +33,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFF9FAFB),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
@@ -44,14 +41,12 @@ class _LoginPageState extends State<LoginPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 40),
-
-              // ================= HEADER SAPAAN =================
               const Text(
                 'Selamat Datang! 👋',
                 style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF111827), // Gray 900
+                  color: Color(0xFF111827),
                 ),
               ),
               const SizedBox(height: 8),
@@ -60,29 +55,22 @@ class _LoginPageState extends State<LoginPage> {
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
-                  color: Color(0xFF6B7280), // Gray 500
+                  color: Color(0xFF6B7280),
                 ),
               ),
               const SizedBox(height: 32),
 
-              // ================= OAUTH BUTTONS (GOOGLE & APPLE) =================
+              // OAUTH BUTTONS
               Row(
                 children: [
                   Expanded(
                     child: OutlinedButton.icon(
                       onPressed: () {},
-                      icon: Image.asset(
-                        'assets/images/googleicon.png', // Menggunakan file lokal Anda
-                        height: 18,
-                        errorBuilder: (context, error, stackTrace) {
-                          // Pengaman tambahan jika file asset gagal dimuat agar tidak merusak layout Row
-                          return const Icon(
-                            Icons.g_mobiledata,
-                            color: Colors.red,
-                          );
-                        },
+                      icon: const Icon(
+                        Icons.g_mobiledata,
+                        color: Colors.red,
+                        size: 24,
                       ),
-
                       label: const Text('Google'),
                       style: OutlinedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 12),
@@ -118,7 +106,6 @@ class _LoginPageState extends State<LoginPage> {
               ),
               const SizedBox(height: 24),
 
-              // ================= PEMBATAS / OR LINE =================
               Row(
                 children: const [
                   Expanded(
@@ -138,7 +125,6 @@ class _LoginPageState extends State<LoginPage> {
               ),
               const SizedBox(height: 24),
 
-              // ================= REUSABLE INPUT: EMAIL =================
               const CustomInputField(
                 label: 'Alamat Email',
                 hintText: 'nama@email.com',
@@ -146,7 +132,6 @@ class _LoginPageState extends State<LoginPage> {
               ),
               const SizedBox(height: 20),
 
-              // ================= REUSABLE INPUT: PASSWORD =================
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -166,14 +151,13 @@ class _LoginPageState extends State<LoginPage> {
                         style: TextButton.styleFrom(
                           padding: EdgeInsets.zero,
                           minimumSize: Size.zero,
-                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         ),
                         child: const Text(
                           'Lupa kata sandi?',
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
-                            color: Color(0xFF2E7D32), // Warna tema hijau
+                            color: Color(0xFF2E7D32),
                           ),
                         ),
                       ),
@@ -181,8 +165,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   const SizedBox(height: 8),
                   CustomInputField(
-                    label:
-                        '', // Kosong karena label atas sudah di-handle Row di atas
+                    label: '',
                     hintText: '••••••••',
                     isPassword: _isObscure,
                     suffixIcon: IconButton(
@@ -192,18 +175,13 @@ class _LoginPageState extends State<LoginPage> {
                             : Icons.visibility_outlined,
                         color: const Color(0xFF9CA3AF),
                       ),
-                      onPressed: () {
-                        setState(() {
-                          _isObscure = !_isObscure;
-                        });
-                      },
+                      onPressed: () => setState(() => _isObscure = !_isObscure),
                     ),
                   ),
                 ],
               ),
               const SizedBox(height: 16),
 
-              // ================= CHECKBOX PERSETUJUAN =================
               Row(
                 children: [
                   SizedBox(
@@ -212,11 +190,8 @@ class _LoginPageState extends State<LoginPage> {
                     child: Checkbox(
                       value: _isAgreed,
                       activeColor: const Color(0xFF2E7D32),
-                      onChanged: (value) {
-                        setState(() {
-                          _isAgreed = value ?? false;
-                        });
-                      },
+                      onChanged: (value) =>
+                          setState(() => _isAgreed = value ?? false),
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -245,16 +220,21 @@ class _LoginPageState extends State<LoginPage> {
               ),
               const SizedBox(height: 28),
 
-              // ================= REUSABLE PRIMARY BUTTON =================
+              // 3. LOGIKA PINDAH HALAMAN KETIKA KLIK MASUK/LOGIN
               PrimaryButton(
                 text: 'Masuk',
                 onPressed: () {
-                  // Tambahkan logika autentikasi di sini
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          const LoginPage(), // Otomatis membuka file kedua Anda
+                    ),
+                  );
                 },
               ),
               const SizedBox(height: 24),
 
-              // ================= BOTTOM TEXT (DAFTAR) =================
               Center(
                 child: RichText(
                   text: const TextSpan(
@@ -277,18 +257,6 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               const SizedBox(height: 40),
-
-              // ================= FOOTER HAK CIPTA =================
-              const Center(
-                child: Text(
-                  '© 2026 Food Rescue App. Hak Cipta Dilindungi.',
-                  style: TextStyle(
-                    color: Color(0xFF9CA3AF),
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
             ],
           ),
         ),
@@ -298,10 +266,8 @@ class _LoginPageState extends State<LoginPage> {
 }
 
 // =========================================================================
-// REUSABLE WIDGETS (Prinsip DRY - Memenuhi Kriteria Tugas 6)
+// REUSABLE COMPONENTS
 // =========================================================================
-
-/// Komponen Input Field Kustom yang bisa dipakai berulang kali
 class CustomInputField extends StatelessWidget {
   final String label;
   final String hintText;
@@ -337,6 +303,7 @@ class CustomInputField extends StatelessWidget {
         TextField(
           obscureText: isPassword,
           keyboardType: keyboardType,
+          style: const TextStyle(color: Colors.black),
           decoration: InputDecoration(
             hintText: hintText,
             hintStyle: const TextStyle(color: Color(0xFF9CA3AF), fontSize: 14),
@@ -362,7 +329,6 @@ class CustomInputField extends StatelessWidget {
   }
 }
 
-/// Komponen Tombol Utama Kustom
 class PrimaryButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
@@ -377,13 +343,11 @@ class PrimaryButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFF2E7D32), // Tema Hijau Food Rescue
+          backgroundColor: const Color(0xFF2E7D32),
           foregroundColor: Colors.white,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
-          elevation: 2,
-          shadowColor: const Color(0xFF2E7D32).withOpacity(0.3),
         ),
         child: Text(
           text,
