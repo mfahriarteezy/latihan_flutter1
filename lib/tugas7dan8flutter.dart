@@ -1,4 +1,7 @@
+import 'package:chronicles/extension/extension.dart';
 import 'package:flutter/material.dart';
+
+import 'tugas6flutter.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,7 +15,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Food Rescue',
-      home: MainNavigation(), //  Home
+      home: MainNavigation(),
     );
   }
 }
@@ -28,7 +31,6 @@ class _MainNavigationState extends State<MainNavigation> {
   int _currentIndex = 0;
   bool _modeGelapUtama = false;
 
-  // Callback fungsi untuk mengubah tema dari halaman Home
   void _toggleTheme(bool value) {
     setState(() {
       _modeGelapUtama = value;
@@ -102,7 +104,6 @@ class _MainNavigationState extends State<MainNavigation> {
         ),
       ),
 
-      //  DRAWER
       drawer: _currentIndex == 0
           ? Drawer(
               backgroundColor: warnaPermukaan,
@@ -162,14 +163,34 @@ class _MainNavigationState extends State<MainNavigation> {
                     warnaTeksUtama,
                     context,
                   ),
+
+                  // Item Logout yang sudah diperbaiki
+                  ListTile(
+                    leading: const Icon(
+                      Icons.logout,
+                      size: 20,
+                      color: Colors.redAccent,
+                    ),
+                    title: const Text(
+                      "Logout",
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.redAccent,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    onTap: () {
+                      Navigator.pop(context);
+                      // Memanggil fungsi navigasi menuju halaman login kamu
+                      context.pushAndRemoveAll(const LoginPage1());
+                    },
+                  ),
                 ],
               ),
             )
-          : null, // Mengembalikan null jika di luar Tab 1 (Drawer otomatis tersembunyi)
-      // Mengganti konten
+          : null,
       body: pages[_currentIndex],
 
-      // TUGAS 8: BOTTOM NAVIGATION BAR
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           border: Border(top: BorderSide(color: warnaBorder, width: 1)),
@@ -182,7 +203,6 @@ class _MainNavigationState extends State<MainNavigation> {
           showUnselectedLabels: true,
           type: BottomNavigationBarType.fixed,
           onTap: (index) {
-            //  menggunakan setState
             setState(() {
               _currentIndex = index;
             });
@@ -210,7 +230,7 @@ class _MainNavigationState extends State<MainNavigation> {
   }
 }
 
-// TAB 1: HALAMAN HOME (=
+// ================= TAB 1: HALAMAN HOME =================
 class FormInteraktifPage extends StatefulWidget {
   final bool modeGelap;
   final ValueChanged<bool> onThemeChanged;
@@ -457,8 +477,7 @@ class _FormInteraktifPageState extends State<FormInteraktifPage> {
   }
 }
 
-// TUGAS 2: HALAMAN TENTANG APLIKASI
-
+// ================= TAB 2: HALAMAN TENTANG APLIKASI =================
 class TentangPage extends StatelessWidget {
   final Color warnaBg;
   final Color warnaPermukaan;
@@ -509,8 +528,8 @@ class TentangPage extends StatelessWidget {
                   "Mari mengurangi food waste dan mulai memberikan makanan yang masih layak kepada yang membutuhkan",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 14,
                     color: warnaTeksSekunder,
+                    fontSize: 14,
                     height: 1.4,
                   ),
                 ),
@@ -559,8 +578,7 @@ class TentangPage extends StatelessWidget {
   }
 }
 
-// WIDGET MANIFES
-
+// ================= WIDGET MANIFES CARD =================
 class _RingkasanCard extends StatelessWidget {
   final Color warnaUtama;
   final Color warnaPermukaan;

@@ -1,7 +1,13 @@
-import 'package:chronicles/tugas9flutter.dart';
+import 'package:chronicles/day19/database/prefenrence_handler.dart';
+import 'package:chronicles/day19/views/splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await initializeDateFormatting('id_ID', null);
+  await PrefenrenceHandler.init();
+
   runApp(const MyApp());
 }
 
@@ -31,7 +37,7 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: Tugas9Flutter(),
+      home: SplashScreen(),
     );
   }
 }

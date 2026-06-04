@@ -1,3 +1,5 @@
+import 'package:chronicles/day19/database/prefenrence_handler.dart';
+import 'package:chronicles/tugas7dan8flutter.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,21 +14,21 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Food Rescue',
-      home: LoginPage(),
+      home: LoginPage1(),
     );
   }
 }
 
 // TAMPILAN LOGIN
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class LoginPage1 extends StatefulWidget {
+  const LoginPage1({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<LoginPage1> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends State<LoginPage1> {
   bool _isObscure = true;
   bool _isAgreed = false;
 
@@ -64,14 +66,8 @@ class _LoginPageState extends State<LoginPage> {
               Row(
                 children: [
                   Expanded(
-                    child: OutlinedButton.icon(
+                    child: OutlinedButton(
                       onPressed: () {},
-                      icon: const Icon(
-                        Icons.g_mobiledata,
-                        color: Colors.red,
-                        size: 24,
-                      ),
-                      label: const Text('Google'),
                       style: OutlinedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 12),
                         side: const BorderSide(color: Color(0xFFE5E7EB)),
@@ -79,6 +75,18 @@ class _LoginPageState extends State<LoginPage> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
+                      ),
+
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            "assets/images/googleicon.png",
+                            width: 20,
+                          ),
+                          const SizedBox(width: 8),
+                          const Text('Google'),
+                        ],
                       ),
                     ),
                   ),
@@ -223,12 +231,14 @@ class _LoginPageState extends State<LoginPage> {
               // 3. LOGIKA PINDAH HALAMAN KETIKA KLIK MASUK/LOGIN
               PrimaryButton(
                 text: 'Masuk',
-                onPressed: () {
+                onPressed: () async {
+                  await PrefenrenceHandler.setLogin(true);
+
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                       builder: (context) =>
-                          const LoginPage(), // Otomatis membuka file kedua Anda
+                          const MainNavigation(), // Otomatis membuka file kedua Anda
                     ),
                   );
                 },
